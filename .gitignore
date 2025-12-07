@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+
+# Virtual environments
+.venv
+
+# IDE
+.vscode/
+.idea/
+
+# caches
+# macOS
+.DS_Store
+# ruff, uv, pytest...
+.*_cache/
+
+# Secrets
+.env
+data
