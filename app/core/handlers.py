@@ -32,7 +32,9 @@ def register_handlers(app: FastAPI):
             status_code=422,
             content=ErrorResponse(
                 error=Error(
-                    type=ErrorTypeEnum.DATA_VALIDATION, message="请求参数校验失败", details=details
+                    type=ErrorTypeEnum.DATA_VALIDATION,
+                    message="Request validation error.",
+                    details=details,
                 )
             ).model_dump(),
         )
@@ -73,7 +75,7 @@ def register_handlers(app: FastAPI):
             content=ErrorResponse(
                 error=Error(
                     type=ErrorTypeEnum.INTERNA_SERVER_ERROR,
-                    message="服务器内部错误",
+                    message="Internal server error.",
                 )
             ).model_dump(),
         )

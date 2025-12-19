@@ -14,11 +14,11 @@ def register_middlewares(app: FastAPI):
         GZipMiddleware,
         minimum_size=1024,
     )
-    # CORS：允许指定前端地址跨域访问
+    # CORS：允许指定的外部源列表访问
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.ALLOWED_ORIGINS,  # 允许的前端地址列表
+        allow_origins=settings.ALLOW_ORIGINS,  # 允许的前端地址列表
+        allow_credentials=True,  # 允许携带 Cookie 等凭证
         allow_methods=["*"],  # 允许所有 HTTP 方法
         allow_headers=["*"],  # 允许所有请求头
-        allow_credentials=True,  # 允许携带 Cookie 等凭证
     )

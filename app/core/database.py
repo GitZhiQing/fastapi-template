@@ -30,12 +30,4 @@ async_session_factory = async_sessionmaker(
     future=True,  # 显示指定使用 SQLAlchemy 2.0 API
 )
 
-redis_client = aioredis.from_url(
-    url=f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_DB}",
-    password=settings.REDIS_PASSWORD,
-    encoding="utf-8",
-    decode_responses=True,
-    max_connections=100,
-    socket_timeout=5,
-    retry_on_timeout=True,
-)
+redis_client = aioredis.from_url(url=settings.REDIS_URL, decode_responses=True)

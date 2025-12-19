@@ -26,10 +26,11 @@ def create_app() -> FastAPI:
         app_info = {
             "name": settings.APP_NAME,
             "environment": settings.APP_ENV,
-            "host": settings.PUBLIC_HOST,
-            "port": settings.PUBLIC_PORT,
+            "debug": settings.DEBUG,
+            "server_host": settings.SERVER_HOST,
+            "server_port": settings.SERVER_PORT,
+            "public_url": settings.PUBLIC_URL,
             "api_prefix": settings.API_PREFIX,
-            "version": settings.APP_VERSION,
         }
         return SuccessResponse(data=app_info)
 
