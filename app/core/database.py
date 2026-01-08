@@ -7,7 +7,7 @@ from app.core.config import get_settings
 settings = get_settings()
 
 async_engine = create_async_engine(
-    url=settings.SQLALCHEMY_DATABASE_URI,
+    url=settings.SQLALCHEMY_DATABASE_URL,
     # 连接池配置
     pool_size=10,  # 核心连接池大小
     max_overflow=20,  # 超出 pool_size 时允许创建的临时连接数
