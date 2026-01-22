@@ -1,5 +1,7 @@
 # FastAPI Template
 
+[English](README.en.md) | [中文](README.md)
+
 一个简单但完善的 FastAPI 模板。
 
 > [!WARNING]
