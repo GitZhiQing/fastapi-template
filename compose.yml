@@ -1,0 +1,58 @@
+name: fastapi-app
+services:
+  api:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      # 使用 Postgres 和 Redis 服务名作为主机地址
+      - POSTGRES_HOST=db
+      - REDIS_HOST=cache
+    ports:
+      - "${PUBLIC_PORT:-8080}:8080"
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - cache
+
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # PostgreSQL 18+ 要求挂载目录为 `/var/lib/postgresql`
+    # Ref: https://github.com/docker-library/docs/blob/master/postgres/README.md
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    # 可选端口暴露范围
+    # - 5432:5432 -> 外部可访问
+    # - 127.0.0.1:5432:5432 -> 仅本地访问
+    # - 注释/移除 -> 仅内部网络访问
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - app-network
+
+  cache:
+    image: redis:8-alpine
+    restart: always
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
